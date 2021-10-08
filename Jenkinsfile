@@ -1,16 +1,51 @@
+def gv
 pipeline {
+
     agent any
 
+    parameters{
+        choice(name:'name',choices:['10-20','20-30','30-40'])
+    }
+
     stages{
-        stage("Build"){
+        stage("init"){
             steps{
-                echo " First Stage"
+             gv= load "script.groovy"
             }
+
         }
-        stage("deploy"){
-            steps{
-                echo "Deploy"
+
+        stage ("Build"){
+            when{
+                expression{
+                    params.name=='20-30'
+                }
             }
+            steps{
+                script{
+                    gv.buildApp()
+                }
+            }
+
+        }
+
+        stage ("test"){
+            steps{
+                script{
+                    gv.testApp()
+                }
+            }
+
+        }
+        stage ("Deploy"){
+            steps{
+                script{
+                    gv.deployApp()
+                }
+            }
+
         }
     }
+   
+
 }
