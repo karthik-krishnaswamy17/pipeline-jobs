@@ -3,6 +3,9 @@ pipeline {
 
     agent any
 
+    environment{
+        f_name='karthik'
+    }
     parameters{
         choice(name:'name',choices:['10-20','20-30','30-40'])
     }

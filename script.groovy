@@ -1,13 +1,14 @@
 def buildApp(){
-	echo " Building..."
+	echo " Building... from groovy"
 }
 
 def testApp(){
-	echo "Tesing..."
+	echo "Tesing...groovy"
 }
 
 def deployApp(){
-	echo "Deploying..."
+	echo "Deploying...groovy"
+	echo "First name is : ${param.f_name}"
 }
 
 return this
