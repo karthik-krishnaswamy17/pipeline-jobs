@@ -8,7 +8,7 @@ def testApp(){
 
 def deployApp(){
 	echo "Deploying...groovy"
-	echo "First name is : ${param.f_name}"
+	echo "First name is : ${env.f_name}"
 }
 
 return this
