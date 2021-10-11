@@ -1,57 +1,33 @@
-def gv
-pipeline {
-
+pipeline{
     agent any
 
-    environment{
-        f_name='karthik'
-    }
-    parameters{
-        choice(name:'name',choices:['10-20','20-30','30-40'])
-    }
-
+tools{
+    maven 'Maven'
+    jdk 'Java'
+}
     stages{
-        stage("init"){
-            steps{
-                script{
-                    gv= load "script.groovy"
-                }
-             
-            }
+        stage('Build jar'){
+        steps{
+            echo "Building Jar...."
+            sh 'mvn package'
 
         }
 
-        stage ("Build"){
-            when{
-                expression{
-                    params.name=='20-30'
-                }
-            }
-            steps{
-                script{
-                    gv.buildApp()
-                }
-            }
-
         }
 
-        stage ("test"){
+       stage('Build Image'){
             steps{
                 script{
-                    gv.testApp()
+                echo "Building Image"
+                withCredentials([usernamePassword(credentialsId:'docker-hub-account',usernameVariable:'user',passwordVariable:'pass')]){
+                sh 'docker build -t karthik0517/java-maven-app:${BUILD_NUMBER} .'
+                sh "echo $pass |docker login --username $user --password-stdin"
+                sh 'docker push karthik0517/java-maven-app:${BUILD_NUMBER}'
                 }
-            }
-
-        }
-        stage ("Deploy"){
-            steps{
-                script{
-                    gv.deployApp()
                 }
+                
             }
-
         }
     }
-   
 
 }
