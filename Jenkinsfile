@@ -22,7 +22,7 @@ stages{
 	}
 
 
-	stage(){
+	stage("build image"){
 		steps{
 			script{
 				gv.buildImage()
@@ -31,7 +31,7 @@ stages{
 		}
 	}
 
-	stage(){
+	stage("deploy"){
 		steps{
 			script{
 				gv.deployApp()
