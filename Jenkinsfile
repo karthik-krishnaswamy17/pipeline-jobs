@@ -1,13 +1,17 @@
 def gv
 pipeline{
 agent any
+tools{
+	maven 'Maven'
+	jdk 'Java'
+}
 
 stages{
 
 	stage("init"){
 		steps{
 			script{
-				
+
 			gv= load "script.groovy"	
 			}
 			
